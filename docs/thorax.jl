@@ -78,8 +78,8 @@ md"""
 
 # ╔═╡ 13ca6985-8e18-49f3-b6c3-3b3722624c73
 begin
-	center_left_cyl = (0mm, 0mm, 0mm)
-	width_left_cyl = (200mm, 100mm, 100mm)
+	center_left_cyl = (-50mm, 0mm, 0mm)
+	width_left_cyl = (100mm, 100mm, 100mm)
 	angles_left_cyl = (0, 0, 0)
 	ob_left_cyl = cylinder(center_left_cyl, width_left_cyl, angles_left_cyl, 1.0f0)
 end
@@ -102,13 +102,44 @@ heatmap(img_left_cyl[:, :, b], colormap=:grays)
 # ╔═╡ 5f9112a0-a5eb-4a65-9f5c-003dc66785ef
 unique(img_left_cyl)
 
+# ╔═╡ 14211b37-5f31-4c27-9fb0-f8802ed782bd
+md"""
+## Right Large Cylinder
+"""
+
+# ╔═╡ 874b6273-cb93-4cfd-b9fe-bc9b5cecb0c3
+begin
+	center_r_cyl = (50mm, 0mm, 0mm)
+	width_r_cyl = (100mm, 100mm, 100mm)
+	angles_r_cyl = (0, 0, 0)
+	ob_r_cyl = cylinder(center_r_cyl, width_r_cyl, angles_r_cyl, 1.0f0)
+end
+
+# ╔═╡ d9134483-7b49-4aca-9c72-d3fff89375e2
+begin
+	ig_r_cyl = ImageGeom( ; dims=dims, deltas=deltas)
+	img_r_cyl = phantom(axes(ig_r_cyl)..., [ob_r_cyl])
+end;
+
+# ╔═╡ 8cd32d37-93c0-4978-ba15-9d8028a86ce2
+img_r_cyl
+
+# ╔═╡ fda471c4-3121-4803-8577-267a78d80a90
+@bind d PlutoUI.Slider(axes(img_r_cyl, 3); default=100, show_value=true)
+
+# ╔═╡ aead7d24-2113-4a39-a13e-2d20289986be
+heatmap(img_r_cyl[:, :, d], colormap=:grays)
+
+# ╔═╡ 4c6bcc31-b4b1-4917-a9cc-4c4b367a345c
+unique(img_r_cyl)
+
 # ╔═╡ 23378556-9811-4f87-a7ca-cf7a9a7cd4b0
 md"""
 ## Combine
 """
 
 # ╔═╡ 83817625-6937-4b82-8c10-abdb16c01fbc
-objects = [ob_cuboid, ob_left_cyl]
+objects = [ob_cuboid, ob_left_cyl, ob_r_cyl]
 
 # ╔═╡ 9d80ecc6-9d50-41b1-82d4-20cceeccc4fb
 begin
@@ -142,6 +173,13 @@ heatmap(img_comb[:, :, c], colormap=:grays)
 # ╟─3322e62a-95fc-4e23-bb55-67834b45b2b4
 # ╠═02531f8d-f5d3-4ee7-aeb0-d8c3343ea9fc
 # ╠═5f9112a0-a5eb-4a65-9f5c-003dc66785ef
+# ╟─14211b37-5f31-4c27-9fb0-f8802ed782bd
+# ╠═874b6273-cb93-4cfd-b9fe-bc9b5cecb0c3
+# ╠═d9134483-7b49-4aca-9c72-d3fff89375e2
+# ╠═8cd32d37-93c0-4978-ba15-9d8028a86ce2
+# ╠═fda471c4-3121-4803-8577-267a78d80a90
+# ╠═aead7d24-2113-4a39-a13e-2d20289986be
+# ╠═4c6bcc31-b4b1-4917-a9cc-4c4b367a345c
 # ╟─23378556-9811-4f87-a7ca-cf7a9a7cd4b0
 # ╠═83817625-6937-4b82-8c10-abdb16c01fbc
 # ╠═9d80ecc6-9d50-41b1-82d4-20cceeccc4fb
