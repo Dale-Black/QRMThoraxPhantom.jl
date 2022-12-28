@@ -108,21 +108,13 @@ md"""
 """
 
 # ╔═╡ 874b6273-cb93-4cfd-b9fe-bc9b5cecb0c3
-begin
-	center_r_cyl = (50mm, 0mm, 0mm)
-	width_r_cyl = (100mm, 100mm, 100mm)
-	angles_r_cyl = (0, 0, 0)
-	ob_r_cyl = cylinder(center_r_cyl, width_r_cyl, angles_r_cyl, 1.0f0)
-end
+ob_r_cyl = ImagePhantoms.translate(ob_left_cyl, 100mm, 0mm, 0mm)
 
 # ╔═╡ d9134483-7b49-4aca-9c72-d3fff89375e2
 begin
 	ig_r_cyl = ImageGeom( ; dims=dims, deltas=deltas)
 	img_r_cyl = phantom(axes(ig_r_cyl)..., [ob_r_cyl])
 end;
-
-# ╔═╡ 8cd32d37-93c0-4978-ba15-9d8028a86ce2
-img_r_cyl
 
 # ╔═╡ fda471c4-3121-4803-8577-267a78d80a90
 @bind d PlutoUI.Slider(axes(img_r_cyl, 3); default=100, show_value=true)
@@ -146,6 +138,9 @@ begin
 	ig_comb = ImageGeom( ; dims=dims, deltas=deltas)
 	img_comb = phantom(axes(ig_comb)..., objects)
 end;
+
+# ╔═╡ 30cbe69d-d7d3-4f8f-856e-28d8444e2a65
+ig_comb
 
 # ╔═╡ d82ab84b-10fb-4f79-af10-f301d4e66c66
 @bind c PlutoUI.Slider(axes(img_comb, 3); default=100, show_value=true)
@@ -176,12 +171,12 @@ heatmap(img_comb[:, :, c], colormap=:grays)
 # ╟─14211b37-5f31-4c27-9fb0-f8802ed782bd
 # ╠═874b6273-cb93-4cfd-b9fe-bc9b5cecb0c3
 # ╠═d9134483-7b49-4aca-9c72-d3fff89375e2
-# ╠═8cd32d37-93c0-4978-ba15-9d8028a86ce2
-# ╠═fda471c4-3121-4803-8577-267a78d80a90
+# ╟─fda471c4-3121-4803-8577-267a78d80a90
 # ╠═aead7d24-2113-4a39-a13e-2d20289986be
 # ╠═4c6bcc31-b4b1-4917-a9cc-4c4b367a345c
 # ╟─23378556-9811-4f87-a7ca-cf7a9a7cd4b0
 # ╠═83817625-6937-4b82-8c10-abdb16c01fbc
+# ╠═30cbe69d-d7d3-4f8f-856e-28d8444e2a65
 # ╠═9d80ecc6-9d50-41b1-82d4-20cceeccc4fb
 # ╟─d82ab84b-10fb-4f79-af10-f301d4e66c66
 # ╟─fafb9e91-153f-4309-aa90-93ffb6157454
